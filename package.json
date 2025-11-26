@@ -10,6 +10,7 @@
     "typegen": "sanity schema extract --path=src/sanity/extract.json && sanity typegen generate && rm ./src/sanity/extract.json"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.10",
     "@headlessui/react": "^2.2.6",
     "@heroicons/react": "^2.2.0",
     "@sanity/image-url": "^1.1.0",
@@ -18,10 +19,11 @@
     "dayjs": "^1.11.13",
     "feed": "^5.1.0",
     "framer-motion": "^12.23.11",
-    "next": "^15.4.4",
+    "next": "^15.5.3",
     "next-sanity": "^10.0.5",
-    "react": "^19",
-    "react-dom": "^19",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-use-measure": "^2.1.7",
     "sanity": "^4.2.0"
   },

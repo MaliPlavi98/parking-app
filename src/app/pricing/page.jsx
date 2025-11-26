@@ -3,7 +3,6 @@ import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient, GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
-import { LogoCloud } from '@/components/logo-cloud'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
@@ -21,8 +20,8 @@ export const metadata = {
 
 const tiers = [
   {
-    name: 'Starter',
-    slug: 'starter',
+    name: 'Pricing',
+    slug: 'Pricing',
     description: 'Everything you need to start selling.',
     priceMonthly: 99,
     href: '#',
@@ -47,63 +46,7 @@ const tiers = [
       { section: 'Support', name: '24 / 7 call center support', value: false },
       { section: 'Support', name: 'Dedicated account manager', value: false },
     ],
-  },
-  {
-    name: 'Growth',
-    slug: 'growth',
-    description: 'All the extras for your growing team.',
-    priceMonthly: 149,
-    href: '#',
-    highlights: [
-      { description: 'Up to 10 team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 50 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: '5 competitor analyses per month' },
-    ],
-    features: [
-      { section: 'Features', name: 'Accounts', value: 10 },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 1000 },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: '5 / month' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
-    ],
-  },
-  {
-    name: 'Enterprise',
-    slug: 'enterprise',
-    description: 'Added flexibility to close deals at scale.',
-    priceMonthly: 299,
-    href: '#',
-    highlights: [
-      { description: 'Unlimited active team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 100 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: 'Unlimited competitor analyses' },
-    ],
-    features: [
-      { section: 'Features', name: 'Accounts', value: 'Unlimited' },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 'Unlimited' },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: 'Unlimited' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: true },
-    ],
-  },
+  }
 ]
 
 function Header() {
@@ -115,22 +58,6 @@ function Header() {
         Sign up today and start selling smarter.
       </Lead>
     </Container>
-  )
-}
-
-function PricingCards() {
-  return (
-    <div className="relative py-24">
-      <Gradient className="absolute inset-x-2 top-48 bottom-0 rounded-4xl ring-1 ring-black/5 ring-inset" />
-      <Container className="relative">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {tiers.map((tier, tierIndex) => (
-            <PricingCard key={tierIndex} tier={tier} />
-          ))}
-        </div>
-        <LogoCloud className="mt-24" />
-      </Container>
-    </div>
   )
 }
 
@@ -172,20 +99,12 @@ function PricingCard({ tier }) {
 function PricingTable({ selectedTier }) {
   return (
     <Container className="py-24">
-      <table className="w-full text-left">
+      <table className="min-w-auto text-left">
         <caption className="sr-only">Pricing plan comparison</caption>
         <colgroup>
           <col className="w-3/5 sm:w-2/5" />
           <col
             data-selected={selectedTier === tiers[0] ? true : undefined}
-            className="w-2/5 data-selected:table-column max-sm:hidden sm:w-1/5"
-          />
-          <col
-            data-selected={selectedTier === tiers[1] ? true : undefined}
-            className="w-2/5 data-selected:table-column max-sm:hidden sm:w-1/5"
-          />
-          <col
-            data-selected={selectedTier === tiers[2] ? true : undefined}
             className="w-2/5 data-selected:table-column max-sm:hidden sm:w-1/5"
           />
         </colgroup>
@@ -396,88 +315,6 @@ function Testimonial() {
   )
 }
 
-function FrequentlyAskedQuestions() {
-  return (
-    <Container>
-      <section id="faqs" className="scroll-mt-8">
-        <Subheading className="text-center">
-          Frequently asked questions
-        </Subheading>
-        <Heading as="div" className="mt-2 text-center">
-          Your questions answered.
-        </Heading>
-        <div className="mx-auto mt-16 mb-32 max-w-xl space-y-12">
-          <dl>
-            <dt className="text-sm font-semibold">
-              What measures are in place to ensure the security of our data?
-            </dt>
-            <dd className="mt-4 text-sm/6 text-gray-600">
-              Data security is a top priority for us, which is ironic given that
-              our business depends on others not taking it very seriously. We
-              understand that any breach could put both us and most of our
-              customers out of business—and behind bars. We employ robust
-              security measures, including data encryption, secure data centers,
-              and regular security audits to ensure this never happens.
-            </dd>
-          </dl>
-          <dl>
-            <dt className="text-sm font-semibold">
-              Is there a mobile app available for your platform?
-            </dt>
-            <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, we offer a mobile app that provides all the key
-              functionalities of our desktop platform, allowing sales reps to
-              manage deals on the go. Additionally, we have another app
-              pre-installed on most modern smartphones that allows us to track
-              your location, listen to your conversations, and access your
-              camera and microphone at any time. This app is not available for
-              download.
-            </dd>
-          </dl>
-          <dl>
-            <dt className="text-sm font-semibold">
-              Can I customize the workflow to match our company’s deal process?
-            </dt>
-            <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our platform is highly customizable, although there should be
-              no need. Before you sign up, we discreetly gather information
-              about your company and its processes from a variety of sources. We
-              then use this information to pre-configure the platform to match
-              your existing workflows. This is why we ask for your social
-              security number and access to your email account during the
-              sign-up process.
-            </dd>
-          </dl>
-          <dl>
-            <dt className="text-sm font-semibold">
-              What kind of support do you offer?
-            </dt>
-            <dd className="mt-4 text-sm/6 text-gray-600">
-              We offer comprehensive support through multiple channels,
-              including 24/7 live chat, email, and phone support. However, since
-              we have full access to your internal network, we will know if
-              you’re having issues before you do.
-            </dd>
-          </dl>
-          <dl>
-            <dt className="text-sm font-semibold">
-              Can I integrate the CRM with other sales intelligence tools?
-            </dt>
-            <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our solution integrates seamlessly with a variety of other
-              systems. However, be warned that most of these integrations are
-              short-lived. We have a dedicated team of engineers who
-              reverse-engineer the APIs of other tools, enabling us to build
-              their functionality into our product and eventually put them out
-              of business.
-            </dd>
-          </dl>
-        </div>
-      </section>
-    </Container>
-  )
-}
-
 export default async function Pricing({ searchParams }) {
   let params = await searchParams
   let tier =
@@ -492,10 +329,12 @@ export default async function Pricing({ searchParams }) {
         <Navbar />
       </Container>
       <Header />
-      <PricingCards />
-      <PricingTable selectedTier={tier} />
-      <Testimonial />
-      <FrequentlyAskedQuestions />
+        <Container>
+          <div className="flex flex-row items-center gap-x-10">
+            <PricingTable selectedTier={tier} />
+            <PricingTable selectedTier={tier} />
+          </div >
+        </Container>
       <Footer />
     </main>
   )
