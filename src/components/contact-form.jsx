@@ -2,7 +2,7 @@ import { BuildingOffice2Icon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/2
 
 export default function ContactForm() {
   return (
-    <div className="relative isolate bg-white dark:bg-gray-900 rounded-2xl">
+    <div className="relative isolate bg-white dark:bg-gray-900 rounded-2xl border-gray-300  border-[thin]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
         <div className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">

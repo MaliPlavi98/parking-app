@@ -103,7 +103,9 @@ export default function Home() {
       <main>
         <div className="mx-2 bg-linear-to-b from-white from-50% to-gray-100 py-32 sm:py-10">
           <FeatureSection />
-          <Gallery />{' '}
+          <div className='mt-8'>
+            <Gallery />
+          </div>
         </div>
         <DarkBentoSection />
       </main>

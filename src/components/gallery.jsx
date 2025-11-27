@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { BentoCard } from "@/components/bento-card";
 
 import image1 from "../images/image1.jpg";
 import image2 from "../images/image2.jpg";
