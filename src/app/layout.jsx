@@ -1,4 +1,5 @@
 import '@/styles/tailwind.css'
+import { AuthProvider } from './AuthProvider.jsx';
 
 export const metadata = {
   title: {
@@ -23,7 +24,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="text-gray-950 antialiased">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )

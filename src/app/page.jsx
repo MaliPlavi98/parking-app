@@ -10,9 +10,50 @@ import GoogleMaps from './../components/googleMaps'
 import ContactQR from './../components/qrCode'
 
 export const metadata = {
+  title: "Parking App Zagreb | Real-time parking availability near Radnička 232",
   description:
-    'Radiant helps you sell more by revealing sensitive information about your customers.',
-}
+    "Find parking spots in real time across Zagreb. Smart parking detection, location-based sectors, and instant updates near Radnička cesta 232.",
+  keywords: [
+    "parking",
+    "Zagreb parking",
+    "parking app",
+    "smart parking",
+    "Radnička cesta parking",
+    "parking availability",
+    "garage parking",
+    "street parking Zagreb",
+  ],
+
+  openGraph: {
+    title: "Parking App Zagreb | Real-time Parking Availability",
+    description:
+      "Find free parking spots easily across Zagreb with smart live parking detection and navigation.",
+    url: "https://your-domain.com",
+    siteName: "Parking App Zagreb",
+    images: [
+      {
+        url: "/og/landing.jpg", // Place this in public/og
+        width: 1200,
+        height: 630,
+        alt: "Parking App Zagreb preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Parking App Zagreb | Real-time Parking Availability",
+    description:
+      "Find real-time available parking spots in Zagreb near Radnička 232.",
+    images: ["/og/landing.jpg"],
+  },
+
+  alternates: {
+    canonical: "https://your-domain.com",
+  },
+};
 
 function Hero() {
   return (

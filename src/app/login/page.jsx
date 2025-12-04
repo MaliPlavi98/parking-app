@@ -1,3 +1,4 @@
+'use client'
 import { Button } from '@/components/button'
 import { GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
@@ -5,19 +6,50 @@ import { Mark } from '@/components/logo'
 import { Checkbox, Field, Input, Label } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/16/solid'
 import { clsx } from 'clsx'
-
-export const metadata = {
-  title: 'Login',
-  description: 'Sign in to your account to continue.',
-}
+import { useState } from 'react';
+import { useRouter } from 'next/navigation'; 
+import { apiLogin } from '../api/auth'
+import { useAuth } from '../AuthProvider'; 
 
 export default function Login() {
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState(''); 
+  const [error, setError] = useState('');
+  const router = useRouter(); 
+  const { login } = useAuth()
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  setError("");
+
+  try {
+    // 1️⃣ Call your backend login endpoint
+    const res = await apiLogin({ username: userName, password });
+
+    // 2️⃣ Store token in HTTP-only cookie via API route
+    await fetch("/api/auth/set-cookie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: res.token }),
+    });
+
+    // 3️⃣ Update AuthProvider with user data
+    login(res.user);
+
+    // 4️⃣ Redirect to admin
+    router.push("/admin");
+  } catch (err) {
+    setError("Invalid username or password");
+  }
+}
+
   return (
     <main className="overflow-hidden bg-gray-50">
       <GradientBackground />
       <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
         <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5">
-          <form action="#" method="POST" className="p-7 sm:p-11">
+          <form onSubmit={handleSubmit} method="POST" className="p-7 sm:p-11">
             <div className="flex items-start">
               <Link href="/" title="Home">
                 <Mark className="h-9 fill-black" />
@@ -27,13 +59,20 @@ export default function Login() {
             <p className="mt-1 text-sm/5 text-gray-600">
               Sign in to your account to continue.
             </p>
+
+            {/* ERROR MESSAGE */}
+            {error && (
+              <p className="mt-4 text-sm text-red-600">{error}</p>
+            )}
+
             <Field className="mt-8 space-y-3">
-              <Label className="text-sm/5 font-medium">Email</Label>
+              <Label className="text-sm/5 font-medium">Username</Label>
               <Input
                 required
+                onChange={(e) => setUserName(e.target.value)}
                 autoFocus
-                type="email"
-                name="email"
+                type="text"
+                name="userName"
                 className={clsx(
                   'block w-full rounded-lg border border-transparent shadow-sm ring-1 ring-black/10',
                   'px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6',
@@ -47,6 +86,7 @@ export default function Login() {
                 required
                 type="password"
                 name="password"
+                onChange={(e) => setPassword(e.target.value)}
                 className={clsx(
                   'block w-full rounded-lg border border-transparent shadow-sm ring-1 ring-black/10',
                   'px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6',
