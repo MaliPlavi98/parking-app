@@ -16,6 +16,7 @@ export default async function http(method, url, data = null, token = null) {
   const options = {
     method,
     headers,
+    "credentials": "include",
   };
 
   if (data) {

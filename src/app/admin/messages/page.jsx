@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteContactMessage, getAllContactMessages } from '@/app/api/contact'
+import { deleteContactMessage, getAllContactMessages } from '../../api/contact'
 import { useEffect, useState } from 'react'
 
 export default function MessagesPage() {

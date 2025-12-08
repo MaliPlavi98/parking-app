@@ -5,10 +5,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LogOut, Menu, X } from "lucide-react";
 
+import { apiLogout } from "../api/auth";
+import { useAuth } from '../AuthProvider'
+
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { logout: feLogout } = useAuth()
 
   const navItems = [
     { href: "/admin", label: "Dashboard" },
@@ -17,8 +21,14 @@ export default function AdminLayout({ children }) {
     { href: "/admin/settings", label: "Settings" },
   ];
 
-  function logout() {
-    cookieStore.removeItem("token")
+  async function logout() {
+    
+    //call BE for logout
+    await apiLogout();
+
+    // call FE for logout
+    feLogout();
+
     router.push("/login");
   }
 

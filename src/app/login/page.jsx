@@ -6,43 +6,35 @@ import { Mark } from '@/components/logo'
 import { Checkbox, Field, Input, Label } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/16/solid'
 import { clsx } from 'clsx'
-import { useState } from 'react';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { apiLogin } from '../api/auth'
-import { useAuth } from '../AuthProvider'; 
+import { useAuth } from '../AuthProvider'
 
 export default function Login() {
-
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState(''); 
-  const [error, setError] = useState('');
-  const router = useRouter(); 
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const router = useRouter()
   const { login } = useAuth()
 
-async function handleSubmit(e) {
-  e.preventDefault();
-  setError("");
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
 
-  try {
-    // 1️⃣ Call your backend login endpoint
-    const res = await apiLogin({ username: userName, password });
+    try {
+      // 1️⃣ Call backend login (Spring sets the cookie!)
+      const res = await apiLogin({ username: userName, password })
 
-    // 2️⃣ Store token in HTTP-only cookie via API route
-    await fetch("/api/auth/set-cookie", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: res.token }),
-    });
+      // 2️⃣ Update FE state with user info
+      login(res.user)
 
-    // 3️⃣ Update AuthProvider with user data
-    login(res.user);
-
-    // 4️⃣ Redirect to admin
-    router.push("/admin");
-  } catch (err) {
-    setError("Invalid username or password");
+      // 3️⃣ Redirect
+      router.push('/admin')
+    } catch (err) {
+      setError('Invalid username or password')
+    }
   }
-}
 
   return (
     <main className="overflow-hidden bg-gray-50">
@@ -61,9 +53,7 @@ async function handleSubmit(e) {
             </p>
 
             {/* ERROR MESSAGE */}
-            {error && (
-              <p className="mt-4 text-sm text-red-600">{error}</p>
-            )}
+            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
             <Field className="mt-8 space-y-3">
               <Label className="text-sm/5 font-medium">Username</Label>

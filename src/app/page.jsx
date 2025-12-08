@@ -6,6 +6,7 @@ import { Gallery } from '@/components/galleries'
 import { Heading, Subheading } from '@/components/text'
 import { ChevronRightIcon } from '@heroicons/react/16/solid'
 import ContactForm from './../components/contact-form'
+import ReservationForm from './../components/reservation-form'
 import GoogleMaps from './../components/googleMaps'
 import ContactQR from './../components/qrCode'
 
@@ -85,7 +86,7 @@ function FeatureSection() {
   return (
     <div className="overflow-hidden">
       <Container className="lg:pb-24">
-        <ContactForm width={1216} height={768} src="/screenshots/app.png" />
+        <ReservationForm width={1216} height={768} src="" />
       </Container>
     </div>
   )
@@ -94,7 +95,11 @@ function FeatureSection() {
 function DarkBentoSection() {
   return (
     <div className="mt-2 bg-gray-900 py-32">
-      <div className="mx-auto flex max-w-6xl flex-col justify-between gap-16 md:flex-row">
+      
+      {/* Change to grid */}
+      <div className="mx-auto max-w-6xl grid grid-cols-1 gap-16 md:grid-cols-2">
+        
+        {/* LEFT COLUMN */}
         <Container className="flex-1" mxAuto={false}>
           <Subheading dark>Outreach</Subheading>
           <Heading as="h3" dark className="mt-2 max-w-3xl">
@@ -105,6 +110,7 @@ function DarkBentoSection() {
           </div>
         </Container>
 
+        {/* RIGHT COLUMN */}
         <Container className="flex-1" mxAuto={false}>
           <Subheading dark>Where to find us</Subheading>
           <Heading as="h3" dark className="mt-2 max-w-3xl">
@@ -112,30 +118,35 @@ function DarkBentoSection() {
           </Heading>
           <div className="mt-10 space-y-4 text-gray-300">
             <p>
-              <span className="font-semibold text-white">Email:</span>{' '}
+              <span className="font-semibold text-white">Email:</span>{" "}
               info@example.com
             </p>
             <p>
-              <span className="font-semibold text-white">Phone:</span> +385 91
-              123 4567
+              <span className="font-semibold text-white">Phone:</span> +385 91 123 4567
             </p>
             <p>
-              <span className="font-semibold text-white">Address:</span>{' '}
+              <span className="font-semibold text-white">Address:</span>{" "}
               Radnička cesta 232, Zagreb, Croatia
             </p>
             <p>
-              <span className="font-semibold text-white">Hours:</span> Mon–Fri,
-              9:00 – 18:00
+              <span className="font-semibold text-white">Hours:</span> Mon–Fri, 9:00 – 18:00
             </p>
           </div>
           <div className="mt-3">
-            <ContactQR/>
-          </div> 
+            <ContactQR />
+          </div>
         </Container>
+
+        {/* FULL-WIDTH CONTACT FORM BELOW */}
+        <div className="md:col-span-2 px-4 sm:px-6 mt-6">
+          <ContactForm />
+        </div>
+
       </div>
     </div>
-  )
+  );
 }
+
 
 export default function Home() {
   return (

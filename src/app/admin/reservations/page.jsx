@@ -1,6 +1,6 @@
 'use client'
 
-import { cancelReservation, getAllReservations } from '@/app/api/reservation'
+import { cancelReservation, getAllReservations } from '../../api/reservation'
 import { useEffect, useState } from 'react'
 
 export default function ReservationsPage() {
