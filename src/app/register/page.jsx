@@ -1,7 +1,6 @@
 'use client'
 
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 export default function Register() {
   return (
