@@ -1,7 +1,7 @@
 'use client'
-import { Button } from '@/components/button'
-import { GradientBackground } from '@/components/gradient'
-import { Link } from '@/components/link'
+import { Button } from '../../components/button'
+import { GradientBackground } from '../../components/gradient'
+import { Link } from '../../components/link'
 import { Mark } from '@/components/logo'
 import { Checkbox, Field, Input, Label } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/16/solid'
@@ -110,7 +110,7 @@ export default function Login() {
           </form>
           <div className="m-1.5 rounded-lg bg-gray-50 py-4 text-center text-sm/5 ring-1 ring-black/5">
             Not a member?{' '}
-            <Link href="#" className="font-medium hover:text-gray-600">
+            <Link href="/register" className="font-medium hover:text-gray-600">
               Create an account
             </Link>
           </div>

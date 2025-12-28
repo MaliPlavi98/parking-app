@@ -30,5 +30,10 @@ export default async function http(method, url, data = null, token = null) {
     throw new Error(errorText || "Request failed");
   }
 
-  return res.json().catch(() => null); // handle empty responses (e.g. DELETE)
+  const contentType = res.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    return res.json();
+  }
+
+  return null;
 }

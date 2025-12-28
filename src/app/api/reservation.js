@@ -1,21 +1,26 @@
 import http from "./http";
 
 // Create new reservation
-export function createReservation(data, token) {
-  return http("POST", "/api/reservation", data, token);
+export function createReservation(data) {
+  return http("POST", "/api/reservation", data);
 }
 
 // Get all reservations
-export function getAllReservations(token) {
-  return http("GET", "/api/reservation", null, token);
+export function getAllReservations() {
+  return http("GET", "/api/reservation");
 }
 
 // Delete reservation by ID
-export function cancelReservation(id, token) {
-  return http("DELETE", `/api/reservation/${id}`, null, token);
+export function cancelReservation(id) {
+  return http("DELETE", `/api/reservation/${id}`);
 }
 
+export function updateReservation(id, data) {
+  return http("PUT", `/api/reservation/${id}`, data);
+}
+
+
 // Check availability
-export function checkAvailability(data, token) {
-  return http("POST", "/api/reservation/check", data, token);
+export function checkAvailability(data) {
+  return http("POST", "/api/reservation/check", data);
 }

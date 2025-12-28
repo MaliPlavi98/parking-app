@@ -4,7 +4,7 @@ export function apiLogin(data) {
   return http("POST", "/auth/login", data);
 }
 
-export function register(data) {
+export function apiRegister(data) {
   return http("POST", "/auth/register", data);
 }
 

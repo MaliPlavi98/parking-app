@@ -11,14 +11,13 @@ export default function MessagesPage() {
   }, [])
 
   async function load() {
-    const token = localStorage.getItem('token')
-    const res = await getAllContactMessages(token)
+    const res = await getAllContactMessages()
     setData(res)
   }
 
   async function remove(id) {
-    const token = localStorage.getItem('token')
-    await deleteContactMessage(id, token)
+
+    await deleteContactMessage(id)
     load()
   }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { checkAvailability } from '../app/api/reservation' // adjust path
 
@@ -11,10 +12,10 @@ export default function ReservationForm() {
   const [endDate, setEndDate] = useState('')
   const [endHour, setEndHour] = useState('0')
   const [endMinute, setEndMinute] = useState('00')
-
-  const [result, setResult] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
 
   function buildDate(dateStr, hour, minute) {
     const [year, month, day] = dateStr.split('-').map(Number)
@@ -26,7 +27,6 @@ export default function ReservationForm() {
     e.preventDefault()
     setLoading(true)
     setError('')
-    setResult(null)
 
     if (!startDate || !endDate) {
       setError('Molimo odaberite datum dolaska i odlaska.')
@@ -50,7 +50,19 @@ export default function ReservationForm() {
       }
 
       const response = await checkAvailability(requestBody, null)
-      setResult(response.data)
+
+      // 🔐 store data temporarily
+      sessionStorage.setItem(
+        'checkoutData',
+        JSON.stringify({
+          availability: response,
+          startTime: requestBody.startTime,
+          endTime: requestBody.endTime,
+        }),
+      )
+
+      // 👉 redirect
+      router.push('/checkout')
     } catch (err) {
       console.error(err)
       setError('Greška pri provjeri dostupnosti.')
@@ -82,7 +94,6 @@ export default function ReservationForm() {
                 value={startDate || ''}
                 onChange={(e) => {
                   setStartDate(e.target.value)
-                  setResult(null)
                   setError('')
                 }}
                 type="date"
@@ -99,7 +110,6 @@ export default function ReservationForm() {
                 value={startHour || ''}
                 onChange={(e) => {
                   setStartHour(e.target.value)
-                  setResult(null)
                   setError('')
                 }}
               >
@@ -120,7 +130,6 @@ export default function ReservationForm() {
                 value={startMinute || ''}
                 onChange={(e) => {
                   setStartMinute(e.target.value)
-                  setResult(null)
                   setError('')
                 }}
               >
@@ -143,7 +152,6 @@ export default function ReservationForm() {
                 value={endDate || ''}
                 onChange={(e) => {
                   setEndDate(e.target.value)
-                  setResult(null)
                   setError('')
                 }}
                 type="date"
@@ -160,7 +168,6 @@ export default function ReservationForm() {
                 value={endHour || ''}
                 onChange={(e) => {
                   setEndHour(e.target.value)
-                  setResult(null)
                   setError('')
                 }}
               >
@@ -181,7 +188,6 @@ export default function ReservationForm() {
                 value={endMinute || ''}
                 onChange={(e) => {
                   setEndMinute(e.target.value)
-                  setResult(null)
                   setError('')
                 }}
               >
@@ -198,7 +204,7 @@ export default function ReservationForm() {
           <div className="pt-4">
             <button
               type="submit"
-              className="w-full rounded-md bg-fuchsia-800 py-3 font-semibold tracking-wide text-white uppercase shadow hover:bg-fuchsia-500"
+              className="w-full rounded-md bg-indigo-600 py-3 font-semibold tracking-wide text-white uppercase shadow hover:bg-indigo-500 focus:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-indigo-600"
             >
               Provjerite cijenu i dostupnost
             </button>

@@ -1,201 +1,122 @@
 'use client'
 
-import { ChevronDownIcon } from '@heroicons/react/16/solid'
+import { Button } from '../../components/button'
+import { GradientBackground } from '../../components/gradient'
+import { Link } from '../../components/link'
+import { Field, Input, Label } from '@headlessui/react'
+import { clsx } from 'clsx'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { apiRegister } from '../api/auth'
 
 export default function Register() {
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const router = useRouter()
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    try {
+      await apiRegister({ username: userName, password, confirmPassword })
+      router.push('/login')
+    } catch {
+      setError('Registration failed. Please try again.')
+    }
+  }
+
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl">
-        <div className="mt-8 mb-8">
-          {' '}
-          {/* Add padding above the form */}
-          <h2 className="text-4xl text-gray-900 dark:text-white">
-            Create an account
-          </h2>
-        </div>
-        <form>
-          <div className="space-y-12">
-
-            <div className="border-b border-gray-900/10 pb-12 dark:border-white/10">
-              <h2 className="text-base/7 font-semibold text-gray-900 dark:text-white">
-                Personal Information
-              </h2>
-              <p className="mt-1 text-sm/6 text-gray-600 dark:text-gray-400">
-                Use a permanent address where you can receive mail.
-              </p>
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="first-name"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    First name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="first-name"
-                      name="first-name"
-                      type="text"
-                      autoComplete="given-name"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="last-name"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    Last name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="last-name"
-                      name="last-name"
-                      type="text"
-                      autoComplete="family-name"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="country"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    Country
-                  </label>
-                  <div className="mt-2 grid grid-cols-1">
-                    <select
-                      id="country"
-                      name="country"
-                      autoComplete="country-name"
-                      className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:*:bg-gray-800 dark:focus:outline-indigo-500"
-                    >
-                      <option>United States</option>
-                      <option>Canada</option>
-                      <option>Mexico</option>
-                    </select>
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400"
-                    />
-                  </div>
-                </div>
-
-                <div className="col-span-full">
-                  <label
-                    htmlFor="street-address"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    Street address
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="street-address"
-                      name="street-address"
-                      type="text"
-                      autoComplete="street-address"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-2 sm:col-start-1">
-                  <label
-                    htmlFor="city"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    City
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="city"
-                      name="city"
-                      type="text"
-                      autoComplete="address-level2"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="region"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    State / Province
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="region"
-                      name="region"
-                      type="text"
-                      autoComplete="address-level1"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="postal-code"
-                    className="block text-sm/6 font-medium text-gray-900 dark:text-white"
-                  >
-                    ZIP / Postal code
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="postal-code"
-                      name="postal-code"
-                      type="text"
-                      autoComplete="postal-code"
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-                    />
-                  </div>
-                </div>
-              </div>
+    <main className="overflow-hidden bg-gray-50">
+      <GradientBackground />
+      <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
+        <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5">
+          <form onSubmit={handleSubmit} className="p-7 sm:p-11">
+            {/* LOGO / TITLE */}
+            <div className="flex items-start">
+              <Link href="/" title="Home">
+                <span className="text-xl font-semibold tracking-tight text-black">
+                  MyApp
+                </span>
+              </Link>
             </div>
-          </div>
 
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm/6 font-semibold text-gray-900 dark:text-white"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:focus-visible:outline-indigo-500"
-            >
-              Save
-            </button>
+            <h1 className="mt-8 text-base/6 font-medium">Create account</h1>
+            <p className="mt-1 text-sm/5 text-gray-600">
+              Sign up to get started.
+            </p>
+
+            {/* ERROR MESSAGE */}
+            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
+            <Field className="mt-8 space-y-3">
+              <Label className="text-sm/5 font-medium">Username</Label>
+              <Input
+                required
+                autoFocus
+                type="text"
+                name="username"
+                onChange={(e) => setUserName(e.target.value)}
+                className={clsx(
+                  'block w-full rounded-lg border border-transparent shadow-sm ring-1 ring-black/10',
+                  'px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6',
+                  'data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black',
+                )}
+              />
+            </Field>
+
+            <Field className="mt-8 space-y-3">
+              <Label className="text-sm/5 font-medium">Password</Label>
+              <Input
+                required
+                type="password"
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className={clsx(
+                  'block w-full rounded-lg border border-transparent shadow-sm ring-1 ring-black/10',
+                  'px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6',
+                  'data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black',
+                )}
+              />
+            </Field>
+
+            <Field className="mt-8 space-y-3">
+              <Label className="text-sm/5 font-medium">Confirm password</Label>
+              <Input
+                required
+                type="password"
+                name="confirmPassword"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={clsx(
+                  'block w-full rounded-lg border border-transparent shadow-sm ring-1 ring-black/10',
+                  'px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6',
+                  'data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black',
+                )}
+              />
+            </Field>
+
+            <div className="mt-8">
+              <Button type="submit" className="w-full">
+                Create account
+              </Button>
+            </div>
+          </form>
+
+          <div className="m-1.5 rounded-lg bg-gray-50 py-4 text-center text-sm/5 ring-1 ring-black/5">
+            Already have an account?{' '}
+            <Link href="/login" className="font-medium hover:text-gray-600">
+              Sign in
+            </Link>
           </div>
-        </form>
+        </div>
       </div>
-      <div className="mt-8 mb-8"> {/* Add padding below the form */}</div>
-    </div>
+    </main>
   )
 }
