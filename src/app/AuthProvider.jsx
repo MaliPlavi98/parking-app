@@ -1,45 +1,48 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
+import { apiMe, apiLogout } from './api/auth'
 
-// Create context
 const AuthContext = createContext(null)
 
-// Export hook
 export function useAuth() {
   return useContext(AuthContext)
 }
 
-// Provider
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  // Example: load user from localStorage or cookie
+  // Load user from backend via cookie
   useEffect(() => {
-    const saved = localStorage.getItem('user')
-    if (saved) {
+    async function loadUser() {
+
+      debugger;
       try {
-        setUser(JSON.parse(saved))
+        const me = await apiMe()
+        setUser(me)
       } catch {
-        localStorage.removeItem('user')
+        setUser(null)
+      } finally {
+        setLoading(false)
       }
     }
+
+    loadUser()
   }, [])
 
-  // Login function (example)
   const login = (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData))
+    // login API already set cookie
     setUser(userData)
   }
 
-  // Logout function
-  const logout = () => {
-    localStorage.removeItem('user')
+  const logout = async () => {
+    await apiLogout()
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

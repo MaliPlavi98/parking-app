@@ -11,3 +11,8 @@ export function apiRegister(data) {
 export function apiLogout() {
   return http("POST", "/auth/logout");
 }
+
+export function apiMe() {
+  return http("GET", "/auth/me");
+}
+

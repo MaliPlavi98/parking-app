@@ -2,7 +2,7 @@
 import { Button } from '../../components/button'
 import { GradientBackground } from '../../components/gradient'
 import { Link } from '../../components/link'
-import { Mark } from '@/components/logo'
+import { Mark } from '../../components/logo'
 import { Checkbox, Field, Input, Label } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/16/solid'
 import { clsx } from 'clsx'
@@ -26,8 +26,9 @@ export default function Login() {
       // 1️⃣ Call backend login (Spring sets the cookie!)
       const res = await apiLogin({ username: userName, password })
 
+      debugger;
       // 2️⃣ Update FE state with user info
-      login(res.user)
+      login(res.userDto)
 
       // 3️⃣ Redirect
       router.push('/admin')

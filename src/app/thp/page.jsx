@@ -1,10 +1,10 @@
 
 'use client'
 
-import {getSettingByKey} from '../api/settings'
-
 import { useEffect, useState } from 'react'
-export default function ReservationThankYou() {
+export default function ReservationThankYou({ parkingLocation }) {
+
+  debugger;
   const reservation = {
     id: 'PARK-2025-00142',
     location: 'Zagreb Center Garage',
@@ -14,34 +14,16 @@ export default function ReservationThankYou() {
     price: '€24.00',
   }
 
-    useEffect(() => {
+useEffect(() => {
+  if (sessionStorage.getItem('orderCompleted') !== 'true') {
+    window.location.replace('/')
+    return
+  }
 
-    async function loadParkingLocation() {
-      try {
-        const res = await getSettingByKey('PARKING_LOCATION')
-        setParkingLocation(res.value) // or res.data.value depending on API
-      } catch (err) {
-        console.error('Failed to load parking location', err)
-      }
-    }
+  sessionStorage.removeItem('orderCompleted')
+  sessionStorage.removeItem('checkoutData')
+}, [])
 
-    loadParkingLocation()
-
-
-    const completed = sessionStorage.getItem('orderCompleted')
-
-    if (completed !== 'true') {
-      // ❌ direct access or refresh
-      window.location.href = '/'
-    }
-
-    // optional: cleanup so refresh doesn’t allow re-entry
-    sessionStorage.removeItem('orderCompleted')
-    sessionStorage.removeItem('checkoutData')
-
-  }, [])
-
-  const [parkingLocation, setParkingLocation] = useState('')
 
   function formatReservationCode(id) {
   return `RES-${String(id).padStart(8, '0')}`

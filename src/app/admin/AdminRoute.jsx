@@ -1,28 +1,31 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAuth } from "../AuthProvider.jsx";
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useAuth } from '../AuthProvider.jsx'
 
 export default function AdminRoute({ children }) {
-  const router = useRouter();
-  const { user } = useAuth();
+  const router = useRouter()
+  const { user, loading } = useAuth()
 
   useEffect(() => {
+    if (loading) return
+
+    debugger;
+
     if (!user) {
-      router.replace("/login");
-      return;
+      router.replace('/login')
+      return
     }
 
-    if (user.role !== "ADMIN") {
-      router.replace("/403");
+    if (user.role !== 'ADMIN') {
+      router.replace('/403')
     }
-  }, [user, router]);
+  }, [user, loading, router])
 
-  // optionally return null while redirecting
-  if (!user || user.role !== "ADMIN") {
-    return null;
+  if (loading || !user || user.role !== 'ADMIN') {
+    return null
   }
 
-  return children;
+  return children
 }

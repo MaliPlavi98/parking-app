@@ -3,7 +3,7 @@ export const metadata = {
   description: "Create a new account."
 };
 
-import Register from "./Register"; // <-- your client component
+import Register from "./page"; // <-- your client component
 
 export default function RegisterPage() {
   return <Register />;
