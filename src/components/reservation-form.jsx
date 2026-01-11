@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { checkAvailability } from '../app/api/reservation' // adjust path
 
-export default function ReservationForm() {
+export default function ReservationForm({ parkingLocationName }) {
   const [startDate, setStartDate] = useState('')
   const [startHour, setStartHour] = useState('0')
   const [startMinute, setStartMinute] = useState('00')

@@ -11,8 +11,6 @@ export default function AdminRoute({ children }) {
   useEffect(() => {
     if (loading) return
 
-    debugger;
-
     if (!user) {
       router.replace('/login')
       return

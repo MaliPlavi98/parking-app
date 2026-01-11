@@ -26,7 +26,6 @@ export default function Login() {
       // 1️⃣ Call backend login (Spring sets the cookie!)
       const res = await apiLogin({ username: userName, password })
 
-      debugger;
       // 2️⃣ Update FE state with user info
       login(res.userDto)
 

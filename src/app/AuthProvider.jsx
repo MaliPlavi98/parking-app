@@ -17,7 +17,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function loadUser() {
 
-      debugger;
       try {
         const me = await apiMe()
         setUser(me)
