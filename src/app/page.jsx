@@ -9,11 +9,6 @@ import ContactForm from './../components/contact-form'
 import GoogleMaps from './../components/googleMaps'
 import ContactQR from './../components/qrCode'
 import ReservationForm from './../components/reservation-form'
-import { getSettingByKey } from "../app/api/settings"
-
-async function getParkingLocationName() {
-  return getSettingByKey("PARKING_LOCATION")
-}
 
 export const metadata = {
   title:
@@ -89,14 +84,10 @@ function Hero() {
 }
 
 async function FeatureSection() {
-  console.log("FeatureSection called on server")
-  const setting = await getParkingLocationName()
-
   return (
     <div className="overflow-hidden">
       <Container className="lg:pb-24">
         <ReservationForm
-          parkingLocationName={setting?.value ?? ''}
         />
       </Container>
     </div>

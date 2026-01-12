@@ -1,32 +1,38 @@
-
 'use client'
 
 import { useEffect, useState } from 'react'
 export default function ReservationThankYou({ parkingLocationName }) {
+  const [checkoutData, setCheckoutData] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const data = sessionStorage.getItem('checkoutData')
+      return data ? JSON.parse(data) : null
+    }
+    return null
+  })
 
-  const reservation = {
-    id: 'PARK-2025-00142',
-    location: 'Zagreb Center Garage',
-    arrival: '21 Dec 2025, 10:15',
-    departure: '23 Dec 2025, 09:00',
-    vehicle: 'BMW X1',
-    price: '€24.00',
-  }
-
-useEffect(() => {
+  useEffect(() => {
   if (sessionStorage.getItem('orderCompleted') !== 'true') {
     window.location.replace('/')
-    return
   }
 
-  //sessionStorage.removeItem('orderCompleted')
-  //sessionStorage.removeItem('checkoutData')
-}, [])
-
+    //sessionStorage.removeItem('orderCompleted')
+    //sessionStorage.removeItem('checkoutData')
+  }, [])
 
   function formatReservationCode(id) {
-  return `RES-${String(id).padStart(8, '0')}`
-}
+    return `RES-${String(id).padStart(8, '0')}`
+  }
+
+  function formatDate(iso) {
+    const d = new Date(iso)
+    return d.toLocaleString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  }
 
   return (
     <main className="bg-white px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
@@ -45,7 +51,7 @@ useEffect(() => {
 
           <dl className="mt-12 text-sm font-medium">
             <dt className="text-gray-900">Reservation ID</dt>
-            <dd className="mt-2 text-indigo-600">{reservation.id}</dd>
+            <dd className="mt-2 text-indigo-600">RES ID</dd>
           </dl>
         </div>
 
@@ -54,29 +60,25 @@ useEffect(() => {
           <dl className="grid grid-cols-1 gap-x-6 gap-y-10 py-10 text-sm sm:grid-cols-2">
             <div>
               <dt className="font-medium text-gray-900">Parking location</dt>
-              <dd className="mt-2 text-gray-700">
-                {parkingLocationName}
-              </dd>
+              <dd className="mt-2 text-gray-700">{parkingLocationName}</dd>
             </div>
 
             <div>
               <dt className="font-medium text-gray-900">Vehicle</dt>
-              <dd className="mt-2 text-gray-700">
-                {reservation.vehicle}
-              </dd>
+              <dd className="mt-2 text-gray-700">BMW X1</dd>
             </div>
 
             <div>
               <dt className="font-medium text-gray-900">Arrival</dt>
               <dd className="mt-2 text-gray-700">
-                {reservation.arrival}
+                {checkoutData && formatDate(checkoutData.startTime)}
               </dd>
             </div>
 
             <div>
               <dt className="font-medium text-gray-900">Departure</dt>
               <dd className="mt-2 text-gray-700">
-                {reservation.departure}
+                {checkoutData && formatDate(checkoutData.endTime)}
               </dd>
             </div>
           </dl>
@@ -85,7 +87,9 @@ useEffect(() => {
           <dl className="space-y-6 border-t border-gray-200 pt-10 text-sm">
             <div className="flex justify-between">
               <dt className="font-medium text-gray-900">Total price</dt>
-              <dd className="text-gray-900">{reservation.price}</dd>
+              <dd className="text-gray-900">
+                €{checkoutData?.availability?.totalPrice}
+              </dd>
             </div>
           </dl>
 
@@ -93,7 +97,7 @@ useEffect(() => {
           <div className="mt-12 flex gap-4">
             <a
               href="/reservations"
-              className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
             >
               View my reservations
             </a>
