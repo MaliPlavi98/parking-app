@@ -1,3 +1,16 @@
+
+
+function getCookie(name) {
+  if (typeof document === "undefined") return null;
+
+  return document.cookie
+    .split("; ")
+    .find(row => row.startsWith(name + "="))
+    ?.split("=")[1];
+}
+
+
+
 export default async function http(method, url, data = null, token = null) {
 
  const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -9,8 +22,10 @@ export default async function http(method, url, data = null, token = null) {
     "Content-Type": "application/json",
   };
 
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+    // 🔐 CSRF token
+  const csrfToken = getCookie("XSRF-TOKEN");
+  if (csrfToken) {
+    headers["X-XSRF-TOKEN"] = csrfToken;
   }
 
   const options = {

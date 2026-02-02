@@ -7,16 +7,20 @@ export function createReservation(data) {
 
 // Get all reservations
 export function getAllReservations() {
-  return http("GET", "/api/reservation");
+  return http("GET", "/api/reservation/admin");
+}
+
+export function getReservationById(id) {
+  return http("GET", `/api/reservation/${id}`);
 }
 
 // Delete reservation by ID
 export function cancelReservation(id) {
-  return http("DELETE", `/api/reservation/${id}`);
+  return http("DELETE", `/api/reservation/admin/${id}`);
 }
 
 export function updateReservation(id, data) {
-  return http("PUT", `/api/reservation/${id}`, data);
+  return http("PUT", `/api/reservation/admin/${id}`, data);
 }
 
 

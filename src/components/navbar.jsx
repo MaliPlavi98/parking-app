@@ -81,9 +81,6 @@ export function Navbar({ banner }) {
         <PlusGridRow className="relative flex justify-between">
           <div className="relative flex gap-6">
             <PlusGridItem className="py-3">
-              <Link href="/" title="Home">
-                <Logo className="h-9" />
-              </Link>
             </PlusGridItem>
             {banner && (
               <div className="relative hidden items-center py-3 lg:flex">

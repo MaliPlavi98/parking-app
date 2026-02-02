@@ -1,26 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-export default function ReservationThankYou({ parkingLocationName }) {
-  const [checkoutData, setCheckoutData] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const data = sessionStorage.getItem('checkoutData')
-      return data ? JSON.parse(data) : null
-    }
-    return null
-  })
-
+export default function ReservationThankYou({ parkingLocationName, reservationId, reservation}) {
+  
   useEffect(() => {
+
   if (sessionStorage.getItem('orderCompleted') !== 'true') {
     window.location.replace('/')
   }
-
-    //sessionStorage.removeItem('orderCompleted')
-    //sessionStorage.removeItem('checkoutData')
   }, [])
 
-  function formatReservationCode(id) {
-    return `RES-${String(id).padStart(8, '0')}`
+  function formatReservationId(id) {
+    return `${String(id).padStart(8, '0')}`
   }
 
   function formatDate(iso) {
@@ -51,7 +42,7 @@ export default function ReservationThankYou({ parkingLocationName }) {
 
           <dl className="mt-12 text-sm font-medium">
             <dt className="text-gray-900">Reservation ID</dt>
-            <dd className="mt-2 text-indigo-600">RES ID</dd>
+            <dd className="mt-2 text-indigo-600">{reservationId && formatReservationId(reservationId)}</dd>
           </dl>
         </div>
 
@@ -71,14 +62,14 @@ export default function ReservationThankYou({ parkingLocationName }) {
             <div>
               <dt className="font-medium text-gray-900">Arrival</dt>
               <dd className="mt-2 text-gray-700">
-                {checkoutData && formatDate(checkoutData.startTime)}
+                {reservation && formatDate(reservation.startTime)}
               </dd>
             </div>
 
             <div>
               <dt className="font-medium text-gray-900">Departure</dt>
               <dd className="mt-2 text-gray-700">
-                {checkoutData && formatDate(checkoutData.endTime)}
+                {reservation && formatDate(reservation.endTime)}
               </dd>
             </div>
           </dl>
@@ -88,7 +79,7 @@ export default function ReservationThankYou({ parkingLocationName }) {
             <div className="flex justify-between">
               <dt className="font-medium text-gray-900">Total price</dt>
               <dd className="text-gray-900">
-                €{checkoutData?.availability?.totalPrice}
+                {reservation?.totalPrice} €
               </dd>
             </div>
           </dl>

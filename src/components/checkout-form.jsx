@@ -6,7 +6,7 @@ import { createReservation as createReservationApi } from '../app/api/reservatio
 
 export default function Checkout() {
   const [data, setData] = useState(null)
-  
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -32,8 +32,8 @@ export default function Checkout() {
   const { availability, startTime, endTime } = data
   const { available, totalPrice, totalDays } = availability
 
-  function handleCreateReservation(e) {
-    e.preventDefault();
+  async function handleCreateReservation(e) {
+    e.preventDefault()
 
     const payload = {
       name,
@@ -49,17 +49,21 @@ export default function Checkout() {
     }
 
     try {
-      createReservationApi(payload)
+      const reservation = await createReservationApi(payload)
 
       // 🔐 mark checkout as completed
       sessionStorage.setItem('orderCompleted', 'true')
 
       // 👉 redirect to THP
-      window.location.href = '/thp'
+      window.location.href = `/thp?rid=${formatReservationCode(reservation.id)}`
     } catch (err) {
       console.error(err)
       alert('Failed to create reservation. Please try again.')
     }
+  }
+
+  function formatReservationCode(id) {
+    return `${String(id).padStart(8, '0')}`
   }
 
   return (

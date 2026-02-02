@@ -13,11 +13,15 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Load user from backend via cookie
   useEffect(() => {
-    async function loadUser() {
-
+    async function initAuth() {
       try {
+        // 🔐 1. Ensure CSRF cookie exists
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/csrf`, {
+          credentials: 'include',
+        })
+
+        // 👤 2. Load current user
         const me = await apiMe()
         setUser(me)
       } catch {
@@ -27,11 +31,10 @@ export function AuthProvider({ children }) {
       }
     }
 
-    loadUser()
+    initAuth()
   }, [])
 
   const login = (userData) => {
-    // login API already set cookie
     setUser(userData)
   }
 

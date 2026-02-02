@@ -38,14 +38,14 @@ export default function Login() {
 
   return (
     <main className="overflow-hidden bg-gray-50">
-      <GradientBackground />
       <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
-        <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5">
+        <div className="w-full max-w-md rounded-xsl bg-white shadow-md ring-1 ring-black/5">
           <form onSubmit={handleSubmit} method="POST" className="p-7 sm:p-11">
+            {/* LOGO / TITLE */}
             <div className="flex items-start">
-              <Link href="/" title="Home">
-                <Mark className="h-9 fill-black" />
-              </Link>
+                <span className="text-xl font-semibold tracking-tight text-black">
+                  Login
+                </span>
             </div>
             <h1 className="mt-8 text-base/6 font-medium">Welcome back!</h1>
             <p className="mt-1 text-sm/5 text-gray-600">

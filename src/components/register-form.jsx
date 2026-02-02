@@ -35,17 +35,14 @@ export default function RegisterForm() {
 
   return (
     <main className="overflow-hidden bg-gray-50">
-      <GradientBackground />
       <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
         <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5">
           <form onSubmit={handleSubmit} className="p-7 sm:p-11">
             {/* LOGO / TITLE */}
             <div className="flex items-start">
-              <Link href="/" title="Home">
                 <span className="text-xl font-semibold tracking-tight text-black">
-                  MyApp
+                  Registration
                 </span>
-              </Link>
             </div>
 
             <h1 className="mt-8 text-base/6 font-medium">Create account</h1>

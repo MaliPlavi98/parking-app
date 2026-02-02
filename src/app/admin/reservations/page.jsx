@@ -93,7 +93,7 @@ export default function ReservationsPage() {
 }
 
 function formatReservationCode(id) {
-  return `RES-${String(id).padStart(8, '0')}`
+  return `${String(id).padStart(8, '0')}`
 }
 
 

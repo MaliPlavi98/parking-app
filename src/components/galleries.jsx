@@ -8,7 +8,7 @@ import {
   useScroll,
   useSpring,
 } from 'framer-motion'
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useLayoutEffect, useRef, useState, useEffect } from 'react'
 import useMeasure from 'react-use-measure'
 import { Container } from './container'
 import { Heading, Subheading } from './text'
@@ -99,20 +99,30 @@ export function Gallery() {
   let scrollRef = useRef(null)
   let { scrollX } = useScroll({ container: scrollRef })
   let [setReferenceWindowRef, bounds] = useMeasure()
-  let [activeIndex, setActiveIndex] = useState(0)
+  let [activeIndex, setActiveIndex] = useState(2)
 
   let [dialogOpen, setDialogOpen] = useState(false)
   let [selectedImg, setSelectedImg] = useState(null)
 
   useMotionValueEvent(scrollX, 'change', (x) => {
-    setActiveIndex(Math.floor(x / scrollRef.current.children[0].clientWidth))
+    if (!scrollRef.current) return
+
+    const itemWidth = scrollRef.current.children[0]?.clientWidth
+    if (!itemWidth) return
+
+    setActiveIndex(Math.round(x / itemWidth))
   })
 
   function scrollTo(index) {
     let gap = 32
-    let width = scrollRef.current.children[0].offsetWidth
+    let width = scrollRef.current.children[3].offsetWidth
     scrollRef.current.scrollTo({ left: (width + gap) * index })
   }
+
+  useEffect(() => {
+    if (!scrollRef.current) return
+    scrollTo(2)
+  }, [])
 
   return (
     <div className="overflow-hidden">
@@ -149,28 +159,35 @@ export function Gallery() {
           />
         ))}
 
-        <Headless.Dialog open={dialogOpen} onClose={setDialogOpen} className="relative z-50">
+        <Headless.Dialog
+          open={dialogOpen}
+          onClose={setDialogOpen}
+          className="relative z-50"
+        >
           {/* Overlay */}
           <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
 
           {/* Centered panel */}
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Headless.Dialog.Panel className="relative bg-white rounded-xl shadow-xl max-w-3xl w-full">
+            <Headless.Dialog.Panel className="relative w-full max-w-3xl rounded-xl bg-white shadow-xl">
               {/* Close button in top-right */}
               <button
                 onClick={() => setDialogOpen(false)}
-                className="font-bold absolute top-4 right-4 rounded-full bg-gray-800/80 p-2 text-white hover:bg-gray-900 focus:outline-none"
+                className="absolute top-4 right-4 rounded-full bg-gray-800/80 p-2 font-bold text-white hover:bg-gray-900 focus:outline-none"
               >
                 ✕
               </button>
 
               {selectedImg && (
-                <img src={selectedImg} alt="" className="w-full h-auto rounded-xl" />
+                <img
+                  src={selectedImg}
+                  alt=""
+                  className="h-auto w-full rounded-xl"
+                />
               )}
             </Headless.Dialog.Panel>
           </div>
         </Headless.Dialog>
-        <div className="w-2xl shrink-0 sm:w-216" />
       </div>
       <Container className="mt-16">
         <div className="flex justify-center">
